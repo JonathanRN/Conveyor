@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using UnityEditor;
+using UnityEditor.Compilation;
 using UnityEditorInternal;
 using UnityEngine;
 
@@ -13,7 +14,7 @@ namespace Jroynoel.Editor
 	/// Adapted from https://unitylist.com/p/10tm/Unity-Editor-Polymorphic-Reorderable-List
 	/// </summary>
 	[CanEditMultipleObjects]
-	[CustomEditor(typeof(Conveyor))]
+	[CustomEditor(typeof(Conveyor), true)]
 	public class ConveyorEditor : UnityEditor.Editor
 	{
 		private static readonly Color ProSkinTextColor = new Color(0.8f, 0.8f, 0.8f, 1.0f);
@@ -106,7 +107,6 @@ namespace Jroynoel.Editor
 					float multiplier = i == 0 ? AdditionalSpaceMultiplier : 1.0f;
 					rect.y += GetDefaultSpaceBetweenElements() * multiplier;
 					rect.height = EditorGUIUtility.singleLineHeight;
-
 					EditorGUI.PropertyField(rect, iteratorProp, true);
 
 					++i;
@@ -234,10 +234,13 @@ namespace Jroynoel.Editor
 
 		private List<Type> GetNonAbstractTypesSubclassOf<T>(bool sorted = true) where T : class
 		{
-			Type parentType = typeof(T);
-			Assembly assembly = Assembly.GetAssembly(parentType);
-
-			List<Type> types = assembly.GetTypes().Where(type => type.IsClass && !type.IsAbstract && type.IsSubclassOf(parentType)).ToList();
+			List<Type> types = new List<Type>();
+			var playerAssemblies = CompilationPipeline.GetAssemblies(AssembliesType.Player).Select(x => x.name);
+			foreach (var a in playerAssemblies)
+			{
+				System.Reflection.Assembly assembly = System.Reflection.Assembly.Load(a);
+				types.AddRange(assembly.GetTypes().Where(type => type.IsClass && !type.IsAbstract && type.IsSubclassOf(typeof(T))).ToList());
+			}
 
 			if (sorted)
 				types.Sort(CompareTypesNames);
@@ -294,7 +297,7 @@ namespace Jroynoel.Editor
 						// Internal Unity variables don't seem to have a FieldInfo but when SerializedProperty.type is "Array", we must consider it
 						// visible to avoid false negatives because even though "Array" type doesn't have a FieldInfo, it can be a visible array property
 						isVisible = propertyAll.type == "Array" || fieldInfoGetter(propertyAll, out propfieldType) != null;
-						if (propertyAll.propertyType != SerializedPropertyType.ManagedReference && isVisible)
+						if (propertyAll.propertyType != SerializedPropertyType.ManagedReference && propertyAll.propertyPath.Contains("Steps") && isVisible)
 						{
 							onLoop?.Invoke();
 						}
