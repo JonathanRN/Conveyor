@@ -1,14 +1,13 @@
 {
-    "name": "com.jroynoel.conveyor",
-    "version": "1.0.0",
-    "displayName": "Conveyor",
-    "description": "A Unity package allowing easy communication between multiple components without the hassle of using dependencies everywhere.",
-    "unity": "2020.3",
-    "dependencies": {
-   },
-    "author": {
-      "name": "Jonathan Roy-Noel",
-      "email": "jonathan.roynoel@gmail.com",
-      "url": "https://www.github.com/jonathanrn"
-    }
-  }
+	"name": "com.jroynoel.conveyor",
+	"version": "1.0.1",
+	"displayName": "Conveyor",
+	"description": "A Unity package allowing easy communication between multiple components without the hassle of using dependencies everywhere.",
+	"unity": "2020.3",
+	"dependencies": {},
+	"author": {
+		"name": "Jonathan Roy-Noel",
+		"email": "jonathan.roynoel@gmail.com",
+		"url": "https://www.github.com/jonathanrn"
+	}
+}
