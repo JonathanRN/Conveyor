@@ -7,7 +7,7 @@ using UnityEditor.Compilation;
 using UnityEditorInternal;
 using UnityEngine;
 
-namespace Jroynoel.Editor
+namespace Jroynoel.Conveyor.Editor
 {
 
 	/// <summary>

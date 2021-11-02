@@ -2,7 +2,7 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
-namespace Jroynoel
+namespace Jroynoel.Conveyor
 {
 	public class Conveyor : MonoBehaviour
 	{

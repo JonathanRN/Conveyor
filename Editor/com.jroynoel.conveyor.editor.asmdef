@@ -1,5 +1,5 @@
 {
-    "name": "Conveyor.Editor",
+    "name": "com.jroynoel.conveyor.editor",
     "rootNamespace": "",
     "references": [
         "GUID:cdcee1ccfd69afc44955ee0175cb7567"

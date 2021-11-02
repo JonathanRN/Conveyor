@@ -1,4 +1,4 @@
-namespace Jroynoel
+namespace Jroynoel.Conveyor
 {
 	[System.Serializable]
 	public abstract class ConveyorStep
